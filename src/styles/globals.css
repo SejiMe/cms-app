@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Caveat", cursive;
+    src: url("/public/fonts/Caveat.woff2");
+}
+
+body {
+    color: black;
+    background-color: white;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+@layer base {
+    @font-face {
+        font-family: "Caveat", cursive;
+        src: url("/public/fonts/Caveat.woff2");
+    }
+}
