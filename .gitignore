@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+#pgadmin
+/pgdata
+/pgadmindata
+
 # database
 /prisma/db.sqlite
 /prisma/db.sqlite-journal
@@ -40,3 +44,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
