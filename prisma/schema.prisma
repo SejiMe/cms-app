@@ -27,12 +27,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -49,6 +49,8 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
+    username      String?   @unique
+    password      String?
     name          String?
     email         String?   @unique
     role          Role      @default(UNVERIFIED)
@@ -60,6 +62,7 @@ model User {
 }
 
 enum Role {
+    SUPERADMIN
     ADMIN
     USER
     UNVERIFIED
@@ -71,4 +74,77 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Mausoleum {
+    ID         String     @id @default(cuid()) @db.Text
+    FamilyName String?
+    Mediator   Mediator?  @relation(fields: [mediatorID], references: [ID])
+    Deceased   Deceased[]
+    mediatorID String?    @db.Uuid
+}
+
+model Location {
+    ID           String @id @default(cuid()) @db.Text
+    LocationName String @db.VarChar(50)
+    Lot          Lot[]
+}
+
+model Lot {
+    ID            String     @id @default(cuid()) @db.Text
+    LotType       LotType?   @relation(fields: [lotTypeID], references: [ID])
+    LotFamilyName String     @db.VarChar(50)
+    Description   String?    @db.Text
+    Deceased      Deceased[]
+    Mediator      Mediator?  @relation(fields: [mediatorID], references: [ID])
+    mediatorID    String?    @db.Uuid
+    Order         Order[]
+    Location      Location   @relation(fields: [locationID], references: [ID])
+    locationID    String     @db.VarChar(50)
+    lotTypeID     String?    @db.Text
+}
+
+model LotType {
+    ID      String  @id @default(cuid()) @db.Text
+    LotName String  @db.VarChar(15)
+    Price   Decimal @db.Money
+    Lot     Lot[]
+}
+
+model Deceased {
+    ID          Int        @id @default(autoincrement()) @db.Oid
+    FirstName   String     @db.VarChar(150)
+    LastName    String     @db.VarChar(150)
+    MiddleName  String?    @db.VarChar(150)
+    AgeDied     Int        @db.SmallInt
+    DateBorn    DateTime   @db.Date
+    DateDied    DateTime   @db.Date
+    Mausoleum   Mausoleum? @relation(fields: [mausoleumID], references: [ID])
+    Lot         Lot?       @relation(fields: [lotID], references: [ID])
+    lotID       String?    @db.Text
+    mausoleumID String?    @db.Text
+}
+
+model Mediator {
+    ID         String  @id @default(uuid()) @db.Uuid
+    FirstName  String  @db.VarChar(150)
+    LastName   String  @db.VarChar(150)
+    MiddleName String? @db.VarChar(150)
+    Phone      String? @db.VarChar(12)
+    Address1   String  @db.VarChar(200)
+    Address2   String  @db.VarChar(200)
+
+    Lot       Lot[]
+    Mausoleum Mausoleum[]
+}
+
+model Order {
+    ID              String   @id @default(cuid()) @db.Text
+    TransactionName String   @db.VarChar(30)
+    Description     String?  @db.Text
+    Price           Decimal  @db.Money
+    Discount        Decimal? @db.Decimal()
+    Interest        Decimal? @db.Money
+    lotID           String   @db.Text
+    Lot             Lot[]
 }

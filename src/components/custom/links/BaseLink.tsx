@@ -23,14 +23,20 @@ const BaseLink = React.forwardRef<HTMLAnchorElement, BaseLinkProps>(
         },
         ref
     ) => {
-        // return false if url href donest starts either / or # 
-        const isNewTab = openNewTab !== undefined? openNewTab: href && !href.startsWith("/") && !href.startsWith("#");
-        console.log(isNewTab);
+        // return false if url href donest starts either / or #
+        const isNewTab =
+            openNewTab !== undefined
+                ? openNewTab
+                : href &&
+                  !href.startsWith("/") &&
+                  !href.startsWith("#");
+
         if (!isNewTab) {
             return (
                 <Link
                     href={href}
                     {...nextLinkProps}
+                    legacyBehavior
                 >
                     <a
                         ref={ref}

@@ -2,9 +2,11 @@ import React, { forwardRef } from "react";
 import BaseLink, { BaseLinkProps } from "./BaseLink";
 
 const CustomLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
-    ({ children, href }, ref) => {
+    ({ children, href, nextLinkProps, ...rest }, ref) => {
         return (
             <BaseLink
+                {...nextLinkProps}
+                {...rest}
                 href={href}
                 ref={ref}
             >

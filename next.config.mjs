@@ -8,6 +8,26 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
+    webpack(config) {
+        config.module.rules.push({
+            test: /\.svg$/i,
+            issuer: /\.[jt]sx?$/,
+            use: ["@svgr/webpack"],
+        });
+        return config;
+    },
+    images: {
+        formats: ["image/avif", "image/webp"],
+        domains: ['lh3.googleusercontent.com'],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "assets.vercel.com",
+                port: "",
+                pathname: "/image/upload/**",
+            },
+        ],
+    },
     reactStrictMode: true,
 
     /**

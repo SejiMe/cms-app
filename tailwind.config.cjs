@@ -8,6 +8,10 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 const config = {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
+        screens: {
+            tablet: "640px",
+            laptop: "1024px",
+        },
         extend: {
             fontFamily: {
                 // caveat: ["Caveat", fontFamily.sans],
