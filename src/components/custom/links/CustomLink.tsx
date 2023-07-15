@@ -1,10 +1,12 @@
 import React, { forwardRef } from "react";
-import BaseLink, { BaseLinkProps } from "./BaseLink";
+import BaseLink, { type BaseLinkProps } from "./BaseLink";
+import { clsxm } from "@/utils/merge";
 
 const CustomLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
-    ({ children, href, nextLinkProps, ...rest }, ref) => {
+    ({ children, href, nextLinkProps, className, ...rest }, ref) => {
         return (
             <BaseLink
+                className={clsxm("", className)}
                 {...nextLinkProps}
                 {...rest}
                 href={href}

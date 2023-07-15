@@ -1,14 +1,12 @@
-import React, { SetStateAction, useEffect, useState } from "react";
-import { LayoutProps } from "./PublicLayout";
+import React, { useEffect, useState } from "react";
+import { type LayoutProps } from "./PublicLayout";
 
 import {
-    useHeaderStyles,
     usePortalLayoutStyles,
     useSidebarStyles,
 } from "../emotion/styles";
 
 import {
-    Container,
     Group,
     Code,
     AppShell,
@@ -33,7 +31,7 @@ const PortalLayout = ({ children }: LayoutProps) => {
     const [loading, setLoading] = useState(false);
     const [opened, setOpened] = useState(false);
     const router = useRouter();
-    const theme = useMantineTheme();
+
     const handleTrue = () => {
         setLoading(true);
     };
@@ -46,12 +44,12 @@ const PortalLayout = ({ children }: LayoutProps) => {
         router.events.on("routeChangeError", handleFalse);
         router.events.on("routeChangeComplete", handleFalse);
 
-        console.log(loading);
+        
         return () => {
             router.events.off("routeChangeError", handleTrue);
             router.events.off("routeChangeError", handleFalse);
             router.events.off("routeChangeComplete", handleFalse);
-            console.log(loading);
+        
         };
     });
 
@@ -70,10 +68,10 @@ const PortalLayout = ({ children }: LayoutProps) => {
             aside={<PortalSidebar />}
         >
             <Box
-                p={'md'}
-                className='h-full w-full rounded-sm shadow-lg'
-                sx={{ backgroundColor: theme.colors.darkGreen[8] }}
+                p={"md"}
+                className='relative flex h-full w-full flex-col rounded-lg bg-neutral-800 p-2 shadow-lg'
             >
+                
                 {loading ? (
                     <Loader
                         variant='dots'
@@ -130,7 +128,7 @@ function HeaderPortal({
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-    const { classes, cx } = usePortalLayoutStyles();
+    const { classes } = usePortalLayoutStyles();
     const theme = useMantineTheme();
     return (
         <Header

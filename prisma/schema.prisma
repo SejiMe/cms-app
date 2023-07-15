@@ -1,9 +1,15 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-    provider = "prisma-client-js"
+generator erd {
+    provider = "prisma-erd-generator"
+    mmdcPath = "../../Projects/cms-app/node_modules/.bin/mmdc"
+    output = "./migrations/ERD.pdf"
+
 }
+
+
+
 
 datasource db {
     provider = "postgresql"
@@ -116,7 +122,7 @@ model Deceased {
     FirstName   String     @db.VarChar(150)
     LastName    String     @db.VarChar(150)
     MiddleName  String?    @db.VarChar(150)
-    AgeDied     Int        @db.SmallInt
+    AgeDied     Int?       @db.SmallInt
     DateBorn    DateTime   @db.Date
     DateDied    DateTime   @db.Date
     Mausoleum   Mausoleum? @relation(fields: [mausoleumID], references: [ID])

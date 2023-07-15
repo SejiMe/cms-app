@@ -87,7 +87,7 @@ const Header = ({ links }: HeaderProps): JSX.Element => {
                             </Menu.Target>
                             <Menu.Dropdown>
                                 <Menu.Item>
-                                    <CustomLink href="/portal">
+                                    <CustomLink href="/portal/dashboard">
                                         Manage
                                     </CustomLink>
                                 </Menu.Item>
